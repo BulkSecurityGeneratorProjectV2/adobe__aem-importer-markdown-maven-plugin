@@ -2,6 +2,11 @@
 
 This Maven plugin allows the creation of AEM packages from Markdown files.
 
+## Dependencies
+
+- https://git.corp.adobe.com/adobe-io/unified-dev-portal/pull/129
+- build https://git.corp.adobe.com/adobe-io/unified-dev-portal/ branch: `standalone-importer`
+
 ## Building
 
 ```bash
