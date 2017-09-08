@@ -77,7 +77,7 @@
         <artifactId>markdown-aem-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
-          <root>/content/udp/en/open/source/markdown-aem-maven</root>
+          <root>/content/udp/en/open/open-source-projects/markdown-aem-maven</root>
           <rootType>udp/components/structure/githubdocumentation</rootType>
           <type>udp/components/structure/githubdocumentation</type>
           <pageTemplate>/apps/udp/templates/importedgithubpage</pageTemplate>
