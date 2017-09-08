@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Goal which touches a timestamp file.
@@ -53,7 +54,7 @@ public class PackageMojo extends AbstractMojo {
     private List<String> pages;
 
     @Parameter(defaultValue = "", property = "branches", required = true)
-    private List<String> branches;
+    private Map<String, String> branches;
 
     @Parameter(defaultValue = "", property = "mappings")
     private Map<String, String> componentMappings;
@@ -82,9 +83,6 @@ public class PackageMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.version}", property = "version")
     private String version;
 
-    @Parameter(defaultValue = "", property = "workingDirs", required = true)
-    private List<String> workingDirs;
-
     @Parameter(defaultValue = "${project.build.directory}", property = "output", required = true)
     private File targetDir;
 
@@ -107,7 +105,15 @@ public class PackageMojo extends AbstractMojo {
 
 
         config.setRootPath(root);
-        config.setBranches(branches);
+
+        List<String> branchNames = new Vector<String>();
+        if (branches.keySet().isEmpty()) {
+            branchNames.add("master");
+        } else {
+            branchNames.addAll(branches.keySet());
+        }
+        config.setBranches(branchNames);
+
         config.setPages(pages);
 
         Map<String, String> mappings = getDefaultMappings();
@@ -123,6 +129,12 @@ public class PackageMojo extends AbstractMojo {
         config.setRootPageResourceType(rootType);
         config.setPageResourceType(type);
         config.setDesignPath(design);
+
+        List<String> workingDirs = new Vector<String>();
+
+        for (String branchName : branches.keySet()) {
+            workingDirs.add(branchName + ":" + branches.get(branchName));
+        }
 
         config.setWorkingDirs(workingDirs);
 

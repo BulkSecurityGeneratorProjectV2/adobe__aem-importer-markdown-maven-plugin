@@ -82,6 +82,13 @@
           <type>udp/components/structure/githubdocumentation</type>
           <pageTemplate>/apps/udp/templates/importedgithubpage</pageTemplate>
           <rootTemplate>/apps/udp/templates/githubdocumentation</rootTemplate>
+          <branches>
+            <master>.</master>
+            <develop>.</develop>
+          </branches>
+          <pages>
+
+          </pages>
         </configuration>
         <!--
         <executions>
