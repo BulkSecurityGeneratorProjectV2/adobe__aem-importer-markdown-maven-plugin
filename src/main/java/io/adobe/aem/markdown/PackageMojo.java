@@ -76,7 +76,7 @@ public class PackageMojo extends AbstractMojo {
     @Parameter(defaultValue = "", property = "type", required = true)
     private String type;
 
-    @Parameter(defaultValue = "${project.group}", property = "group")
+    @Parameter(defaultValue = "${project.groupId}", property = "group")
     private String group;
 
     @Parameter(defaultValue = "${project.version}", property = "version")
