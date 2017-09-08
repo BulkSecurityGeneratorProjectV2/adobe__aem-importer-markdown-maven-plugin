@@ -18,10 +18,7 @@ package io.adobe.aem.markdown;
 
 import io.adobe.udp.markdownimporter.*;
 import io.adobe.udp.markdownimporter.mappings.MarkdownMappings;
-import io.adobe.udp.markdownimporter.services.GithubLinkService;
-import io.adobe.udp.markdownimporter.services.GithubLinkServiceImpl;
-import io.adobe.udp.markdownimporter.services.MarkdownParserService;
-import io.adobe.udp.markdownimporter.services.MarkdownParserServiceImpl;
+import io.adobe.udp.markdownimporter.services.*;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -85,6 +82,9 @@ public class PackageMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.version}", property = "version")
     private String version;
 
+    @Parameter(defaultValue = "", property = "workingDirs", required = true)
+    private List<String> workingDirs;
+
     private Map<String, String> getDefaultMappings() {
         Map<String, String> mappings = new HashMap<String, String>();
 
@@ -121,20 +121,24 @@ public class PackageMojo extends AbstractMojo {
         config.setPageResourceType(type);
         config.setDesignPath(design);
 
+        config.setWorkingDirs(workingDirs);
+
         MarkdownMappings.configure(config.getComponentMappings());
         MarkdownParserService markdownParserService = new MarkdownParserServiceImpl();
         GithubLinkService githubLinkService = new GithubLinkServiceImpl();
-        MarkdownFileImportScheduler importer = new MarkdownFileImportScheduler(markdownParserService, githubLinkService);
-        importer.processGithubPage(config);
-        Map<String, PageData> pages = importer.getPageData();
-        Map<String, File> images = importer.getImages();
+        FileSystemPathService pathService = new FileSystemPathServiceImpl();
+        WorkdirMarkdownImporter i = new WorkdirMarkdownImporter(markdownParserService, githubLinkService, pathService, config);
+
+        i.processGithubPage();
+        Map<String, PageData> pages = i.getPageData();
+        Map<String, File> images = i.getImages();
         RootPageData root = new RootPageData(config);
         pages.put(config.getRootPath(), root);
 
         try {
             Importer.generatePackage(pages, images, config);
         } catch (IOException e) {
-            throw new MojoExecutionException("Cannot generate AEM package", e);
+            throw new MojoExecutionException("Cannot generate content package", e);
         }
     }
 }
