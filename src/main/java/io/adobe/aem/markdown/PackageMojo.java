@@ -85,6 +85,9 @@ public class PackageMojo extends AbstractMojo {
     @Parameter(defaultValue = "", property = "workingDirs", required = true)
     private List<String> workingDirs;
 
+    @Parameter(defaultValue = "${project.build.directory}", property = "output", required = true)
+    private File targetDir;
+
     private Map<String, String> getDefaultMappings() {
         Map<String, String> mappings = new HashMap<String, String>();
 
@@ -137,6 +140,10 @@ public class PackageMojo extends AbstractMojo {
 
         try {
             Importer.generatePackage(pages, images, config);
+
+            File zipFile = new File(config.getPackageName() +".zip");
+
+            zipFile.renameTo(new File(targetDir, zipFile.getName()));
         } catch (IOException e) {
             throw new MojoExecutionException("Cannot generate content package", e);
         }
