@@ -17,7 +17,6 @@ $ mvn clean install
 Add following stuff to your `pom.xml`
 
 ```xml
-
   <build>
     <plugins>
       <plugin>
@@ -30,6 +29,14 @@ Add following stuff to your `pom.xml`
           <type>udp/components/structure/githubdocumentation</type>
           <pageTemplate>/apps/udp/templates/importedgithubpage</pageTemplate>
           <rootTemplate>/apps/udp/templates/githubdocumentation</rootTemplate>
+          <branches>
+            <master>path/to/master/checkout</master>
+            <develop>path/to/develop/checkout</develop>
+          </branches>
+          <pages>
+            <page>README.md</page>
+            <page>docs*</page>
+          </pages>  
         </configuration>
         <executions>
           <execution>
@@ -46,11 +53,13 @@ Add following stuff to your `pom.xml`
 
 ## Parameters
 
-- `root`
-- `rootType`
-- `type`
-- `pageTemplate`
-- `rootTemplate`
+- `root`: this is the path in AEM where your pages are being created. Make sure not to overwrite important existing content
+- `rootType`: this is the `sling:resourceType` of the root page
+- `type`: this is the `sling:resourceType` for all imported pages
+- `pageTemplate`: page template path for the root page
+- `rootTemplate`: page template path for imported pages
+- `branches`: key-value pairs of branches and the root path of the local checkout
+- `docs`: list of patterns of paths or file names that should be imported
 
 ## Running
 
