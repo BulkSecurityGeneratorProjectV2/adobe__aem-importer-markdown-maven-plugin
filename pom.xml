@@ -12,6 +12,55 @@
   <!-- FIXME change it to the project's website -->
   <url>http://maven.apache.org</url>
 
+  <repositories>
+    <repository>
+      <id>central-adobe</id>
+      <name>Adobe Proxy Repository</name>
+      <url>http://repo.adobe.com/nexus/content/groups/public</url>
+      <layout>default</layout>
+    </repository>
+    <repository>
+      <id>central-maven</id>
+      <name>Maven Repository Switchboard</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>maven-markdown-tools-release</name>
+      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-release</url>
+    </repository>
+    <repository>
+      <snapshots />
+      <id>snapshots</id>
+      <name>maven-markdown-tools-snapshot</name>
+      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-snapshot</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>maven-markdown-tools-release</name>
+      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-release</url>
+    </pluginRepository>
+    <pluginRepository>
+      <snapshots />
+      <id>snapshots</id>
+      <name>maven-markdown-tools-snapshot</name>
+      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-snapshot</url>
+    </pluginRepository>
+  </pluginRepositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
