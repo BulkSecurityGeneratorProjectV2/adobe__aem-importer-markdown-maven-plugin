@@ -1,4 +1,6 @@
-# Markdown to AEM Maven Plugin
+# AEM Importer for Markdown Maven Plugin
+
+[![CircleCI](https://circleci.com/gh/adobe/aem-importer-markdown-maven-plugin.svg?style=svg)](https://circleci.com/gh/adobe/aem-importer-markdown-maven-plugin)
 
 * Are you using Adobe Experience Manager?
 * Are you using Apache Maven?
