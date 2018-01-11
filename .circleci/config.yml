@@ -41,6 +41,25 @@ jobs:
       # run tests!
       - run: mvn integration-test
 
+      - run: git config --global user.email "trieloff@adobe.com" && git config --global user.name "CirceCI"
+
+      # send up-to-date markdown back to GitHub
+      - run:
+          name: Publish Markdown to GitHub
+          command: git add --force docs/javadoc/* && git commit -m "[ci skip] updating documentation" && git push
+          filters:
+            branches:
+              only: master
+
+      - run:
+          name: Publish Snapshot
+          command: |
+            echo "<settings><servers><server><id>ossrh</id><username>$USERNAME</username><password>$PASSWORD</password></server></servers></settings>" > ~/.m2/settings.xml
+            mvn deploy
+          filters:
+            branches:
+              only: master
+
       - save_cache:
           paths:
             - ~/.m2
