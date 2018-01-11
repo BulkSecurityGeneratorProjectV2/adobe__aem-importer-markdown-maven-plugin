@@ -1,20 +1,10 @@
-package io.adobe.aem.markdown;
-
-/*
- * Copyright 2001-2005 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/**
+ * Copyright 2018 Adobe Systems Incorporated. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
  */
+package io.adobe.aem.markdown;
 
 import io.adobe.udp.markdownimporter.*;
 import io.adobe.udp.markdownimporter.mappings.MarkdownMappings;
@@ -90,11 +80,16 @@ public class PackageMojo extends AbstractMojo {
         Map<String, String> mappings = new HashMap<String, String>();
 
         mappings.put("com.vladsch.flexmark.ast.Node", "io.adobe.udp.markdownimporter.mappings.MarkdownParagraphMapper");
-        mappings.put("com.vladsch.flexmark.ast.IndentedCodeBlock", "io.adobe.udp.markdownimporter.mappings.IndentedCodeBlockMapper");
-        mappings.put("com.vladsch.flexmark.ast.FencedCodeBlock", "io.adobe.udp.markdownimporter.mappings.MarkdownFencedCodeBlockMapper");
-        mappings.put("com.vladsch.flexmark.ext.tables.TableBlock", "io.adobe.udp.markdownimporter.mappings.MarkdownTableMapper");
-        mappings.put("com.vladsch.flexmark.ast.Heading", "io.adobe.udp.markdownimporter.mappings.MarkdownHeadlineMapper");
-        mappings.put("com.vladsch.flexmark.ext.front.matter.YamlFrontMatterBlock", "io.adobe.udp.markdownimporter.mappings.FrontMatterMapper");
+        mappings.put("com.vladsch.flexmark.ast.IndentedCodeBlock",
+                "io.adobe.udp.markdownimporter.mappings.IndentedCodeBlockMapper");
+        mappings.put("com.vladsch.flexmark.ast.FencedCodeBlock",
+                "io.adobe.udp.markdownimporter.mappings.MarkdownFencedCodeBlockMapper");
+        mappings.put("com.vladsch.flexmark.ext.tables.TableBlock",
+                "io.adobe.udp.markdownimporter.mappings.MarkdownTableMapper");
+        mappings.put("com.vladsch.flexmark.ast.Heading",
+                "io.adobe.udp.markdownimporter.mappings.MarkdownHeadlineMapper");
+        mappings.put("com.vladsch.flexmark.ext.front.matter.YamlFrontMatterBlock",
+                "io.adobe.udp.markdownimporter.mappings.FrontMatterMapper");
 
         return mappings;
     }
@@ -102,7 +97,6 @@ public class PackageMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
 
         InputConfig config = new InputConfig();
-
 
         config.setRootPath(root);
 
@@ -142,7 +136,8 @@ public class PackageMojo extends AbstractMojo {
         MarkdownParserService markdownParserService = new MarkdownParserServiceImpl();
         GithubLinkService githubLinkService = new GithubLinkServiceImpl();
         FileSystemPathService pathService = new FileSystemPathServiceImpl();
-        WorkdirMarkdownImporter i = new WorkdirMarkdownImporter(markdownParserService, githubLinkService, pathService, config);
+        WorkdirMarkdownImporter i = new WorkdirMarkdownImporter(markdownParserService, githubLinkService, pathService,
+                config);
 
         i.processGithubPage();
         Map<String, PageData> pages = i.getPageData();
@@ -153,7 +148,7 @@ public class PackageMojo extends AbstractMojo {
         try {
             Importer.generatePackage(pages, images, config);
 
-            File zipFile = new File(config.getPackageName() +".zip");
+            File zipFile = new File(config.getPackageName() + ".zip");
 
             zipFile.renameTo(new File(targetDir, zipFile.getName()));
         } catch (IOException e) {

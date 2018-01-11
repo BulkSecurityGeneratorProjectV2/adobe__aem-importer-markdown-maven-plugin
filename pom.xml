@@ -1,17 +1,47 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project 
+  xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!--
+/**
+ Copyright 2018 Adobe Systems Incorporated. All rights reserved.
+ This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License. You may obtain a copy
+ of the License at http://www.apache.org/licenses/LICENSE-2.0
+-->
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>io.adobe.aem.markdown</groupId>
-  <artifactId>markdown-aem-maven-plugin</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>com.adobe.aem</groupId>
+  <artifactId>aem-importer-markdown-maven-plugin</artifactId>
+  <version>1.11-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
-
-  <name>markdown-aem-maven-plugin Maven Plugin</name>
-
-  <!-- FIXME change it to the project's website -->
-  <url>http://maven.apache.org</url>
-
+  <name>AEM Importer for Markdown Maven Plugin</name>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>trieloff</id>
+      <name>Lars Trieloff</name>
+      <email>trieloff@adobe.com</email>
+      <url>https://twitter.com/trieloff</url>
+      <organization>Adobe</organization>
+      <organizationUrl>http://www.adobe.com</organizationUrl>
+    </developer>
+  </developers>
+  <organization>
+    <name>Adobe</name>
+    <url>https://www.adobe.com</url>
+  </organization>
+  <url>https://github.com/adobe/aem-importer-markdown-maven-plugin</url>
+  <scm>
+    <developerConnection>scm:git:git@github.com:adobe/aem-importer-markdown-maven-plugin.git</developerConnection>
+    <connection>scm:git:https://github.com/adobe/aem-importer-markdown-maven-plugin.git</connection>
+    <url>https://github.com/adobe/aem-importer-markdown-maven-plugin</url>
+    <tag>HEAD</tag>
+  </scm>
   <repositories>
     <repository>
       <id>central-adobe</id>
@@ -28,39 +58,10 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-    <repository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>central</id>
-      <name>maven-markdown-tools-release</name>
-      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-release</url>
-    </repository>
-    <repository>
-      <snapshots />
-      <id>snapshots</id>
-      <name>maven-markdown-tools-snapshot</name>
-      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-snapshot</url>
-    </repository>
   </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>central</id>
-      <name>maven-markdown-tools-release</name>
-      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-release</url>
-    </pluginRepository>
-    <pluginRepository>
-      <snapshots />
-      <id>snapshots</id>
-      <name>maven-markdown-tools-snapshot</name>
-      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-snapshot</url>
-    </pluginRepository>
-  </pluginRepositories>
-
+  <!-- later
+    <pluginRepositories><pluginRepository><snapshots><enabled>false</enabled></snapshots><id>central</id><name>maven-markdown-tools-release</name><url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-release</url></pluginRepository><pluginRepository><snapshots /><id>snapshots</id><name>maven-markdown-tools-snapshot</name><url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-snapshot</url></pluginRepository></pluginRepositories>
+  -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -88,20 +89,41 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.adobe.udp</groupId>
-      <artifactId>markdown-importer</artifactId>
-      <version>0.0.2-SNAPSHOT</version>
+      <groupId>com.adobe.aem</groupId>
+      <artifactId>aem-importer-markdown</artifactId>
+      <version>0.0.11</version>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.2</version>
         <configuration>
-          <goalPrefix>markdown-aem-maven-plugin</goalPrefix>
+          <goalPrefix>aem-importer-markdown-maven-plugin</goalPrefix>
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
         </configuration>
         <executions>
@@ -119,11 +141,10 @@
           </execution>
         </executions>
       </plugin>
-
       <!-- run the plugin on itself -->
       <plugin>
-        <groupId>io.adobe.aem.markdown</groupId>
-        <artifactId>markdown-aem-maven-plugin</artifactId>
+        <groupId>com.adobe.aem</groupId>
+        <artifactId>aem-importer-markdown-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
           <root>/content/udp/en/open/open-source-projects/markdown-aem-maven</root>
@@ -135,28 +156,75 @@
             <master>.</master>
             <develop>.</develop>
           </branches>
-          <pages>
-
-          </pages>
+          <pages></pages>
         </configuration>
         <!--
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>convertSwagger2markup</goal>
-            </goals>
-          </execution>
-        </executions>
+        <executions><execution><phase>generate-sources</phase><goals><goal>convertSwagger2markup</goal></goals></execution></executions>
         -->
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
   <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>run-its</id>
       <build>
-
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -188,20 +256,7 @@
             </executions>
           </plugin>
         </plugins>
-
       </build>
     </profile>
   </profiles>
-  <distributionManagement>
-    <repository>
-      <id>central</id>
-      <name>or1010050152009.corp.adobe.com-releases</name>
-      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-release</url>
-    </repository>
-    <snapshotRepository>
-      <id>snapshots</id>
-      <name>or1010050152009.corp.adobe.com-snapshots</name>
-      <url>https://artifactory.corp.adobe.com:443/artifactory/maven-markdown-tools-snapshot</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>
