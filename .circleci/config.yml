@@ -41,16 +41,6 @@ jobs:
       # run tests!
       - run: mvn integration-test
 
-      - run: git config --global user.email "trieloff@adobe.com" && git config --global user.name "CirceCI"
-
-      # send up-to-date markdown back to GitHub
-      - run:
-          name: Publish Markdown to GitHub
-          command: git add --force docs/javadoc/* && git commit -m "[ci skip] updating documentation" && git push
-          filters:
-            branches:
-              only: master
-
       - run:
           name: Publish Snapshot
           command: |
