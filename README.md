@@ -58,13 +58,15 @@ Add following stuff to your `pom.xml`
 
 ## Parameters
 
-- `root`: this is the path in AEM where your pages are being created. Make sure not to overwrite important existing content
-- `rootType`: this is the `sling:resourceType` of the root page
-- `type`: this is the `sling:resourceType` for all imported pages
-- `pageTemplate`: page template path for the root page
-- `rootTemplate`: page template path for imported pages
-- `branches`: key-value pairs of branches and the root path of the local checkout
-- `docs`: list of patterns of paths or file names that should be imported
+| Parameter | Description |
+| --- | --- |
+| `root` | this is the path in AEM where your pages are being created. Make sure not to overwrite important existing content |
+| `rootType` | this is the `sling:resourceType` of the root page |
+| `type` | this is the `sling:resourceType` for all imported pages |
+| `pageTemplate` | page template path for the root page |
+| `rootTemplate` | page template path for imported pages |
+| `branches` | key-value pairs of branches and the root path of the local checkout |
+| `docs` | list of patterns of paths or file names that should be imported |
 
 ## Running
 
